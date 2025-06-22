@@ -1,40 +1,25 @@
-import React, { useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {Form, Button, Row, Col} from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux";
-import {login} from "../actions/user";
 import FormContainer from "../components/FormContainer";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
 
-const Login = ({history}) => {
+const Register = () => {
+    const [name, set_name] = useState("");
     const [email, set_email] = useState("");
     const [password, set_password] = useState("");
-    
-    const dispatch = useDispatch();
-
-    const submit_handler = (event) => {
-        event.preventDefault();
-        dispatch(login(email, password));
-    };
-
-    const user_login = useSelector((state) => state.user_login);
-    const {loading, error, user_info} = user_login;
-
-    useEffect(() => {
-        if (user_info) {
-            history.push("/");
-        };
-    }, [history, user_info]);
-
-    console.log(user_login);
-    
 
     return (
         <FormContainer>
-            <h1>Login</h1>
-            {error && <Message variant="danger">{error}</Message>}
-            <Form onSubmit={submit_handler}>
+            <h1>Register</h1>
+            <Form>
+                <Form.Group controlId="name" className="my-2">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                    type="text"
+                    value={name}
+                    onChange={(event) => set_name(event.target.value)}
+                    ></Form.Control>
+                </Form.Group>
                 <Form.Group controlId="email" className="my-2">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -51,16 +36,15 @@ const Login = ({history}) => {
                     onChange={(event) => set_password(event.target.value)}
                     ></Form.Control>
                 </Form.Group>
-                <Button disabled={loading} type="submit" variant="primary">Login</Button>
-                {loading && <Loader />}
+                <Button type="submit" variant="primary">Register</Button>
             </Form>
             <Row className="py-3">
                 <Col>
-                    New customer?{" "}<Link to="/register" >Register</Link>
+                    Already have an account?{" "}<Link to="/login" >Login</Link>
                 </Col>
             </Row>
         </FormContainer>
     );
 };
 
-export default Login;
+export default Register;

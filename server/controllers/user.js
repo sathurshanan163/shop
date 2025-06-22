@@ -1,8 +1,8 @@
-import async_handler from "express-async-handler";
+import asyncHandler from "express-async-handler";
 import generate_token from "../utils/generate_token.js"
 import User from "../models/user.js"
 
-const login = async_handler(async (req, res) => {
+const login = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
     const user = await User.findOne({email});
     if (user && (await user.match_password(password))) {
@@ -19,7 +19,7 @@ const login = async_handler(async (req, res) => {
     };
 });
 
-const register = async_handler(async (req, res) => {
+const register = asyncHandler(async (req, res) => {
     const {name, email, password} = req.body;
     const is_user_exist = await User.findOne({email});
     if (is_user_exist) {

@@ -1,16 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const App = () => {
   return (
     <Router>
       <main className="py-3">
         <Container>
-            <Route path="/" exact component={Home} />
+          <Switch>
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+          </Switch>
         </Container>
       </main>
     </Router>
