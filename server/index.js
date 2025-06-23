@@ -1,6 +1,7 @@
 import express from "express";
-import user_routes from "./routers/user.js";
 import dotenv from "dotenv";
+import user_routes from "./routers/user.js";
+import product_routes from "./routers/product.js";
 import connect_db from "./config/db.js";
 import {error_handler} from "./middleware/error.js";
 
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
     res.send("API");
 })
 app.use("/api/users", user_routes);
+app.use("/api/products", product_routes);
 
 app.use(error_handler);
 
