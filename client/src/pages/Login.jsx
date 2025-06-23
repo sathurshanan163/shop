@@ -25,10 +25,7 @@ const Login = ({history}) => {
         if (user_info) {
             history.push("/");
         };
-    }, [history, user_info]);
-
-    console.log(user_login);
-    
+    }, [history, user_info]);    
 
     return (
         <FormContainer>
