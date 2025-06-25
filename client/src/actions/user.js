@@ -78,13 +78,13 @@ export const profile = (id) => async (dispatch, getState) => {
     dispatch({ type: PROFILE_RESET });
     const {
       user_login: { user_info },
-    } = getState();
+    } = getState();    
     const config = {
       headers: {
-        Authorzation: `Bearer ${user_info.token}`,
+        Authorization: `Bearer ${user_info.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users/profile/${id}`, config);
+    const { data } = await axios.get(`/api/users/${id}`, config);
     dispatch({ type: PROFILE_SUCCESS, payload: data });
   } catch (error) {
     const msg = dispatch({ type: PROFILE_REQUEST });
