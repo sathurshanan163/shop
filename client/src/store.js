@@ -6,6 +6,7 @@ import {
   profile_reducer,
 } from './reducers/user';
 import { products_reducer, product_reducer } from './reducers/product';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 const reducer = combineReducers({
   user_login: login_reducer,
@@ -28,8 +29,7 @@ const middleware = [thunk];
 const store = legacy_createStore(
   reducer,
   initialState,
-  applyMiddleware(...middleware),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;
