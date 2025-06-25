@@ -22,7 +22,9 @@ const Product = ({ match }) => {
   const product_info = useSelector((state) => state.product_info);
   const { is_loading, error, product } = product_info;
 
-  const add_to_cart_handler = () => {};
+  const add_to_cart_handler = () => {
+
+  };
 
   useEffect(() => {
     dispatch(list_product_info(match.params.id));
