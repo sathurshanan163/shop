@@ -94,7 +94,7 @@ const Product = ({ match }) => {
                 )}
                 <ListGroup.Item>
                   <Button
-                    variant="dark"
+                    variant="primary"
                     style={{ width: '100%' }}
                     type="button"
                     disabled={product.stock === 0}

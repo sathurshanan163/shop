@@ -8,6 +8,10 @@ import {
   REGISTER_FAIL,
   PROFILE_REQUEST,
   PROFILE_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE_RESET,
   PROFILE_FAIL,
   PROFILE_RESET,
 } from '../constants/user';
@@ -52,6 +56,21 @@ export const profile_reducer = (state = { user: {} }, action) => {
       return { is_loading: false, error: action.payload };
     case PROFILE_RESET:
       return { user: {} };
+    default:
+      return state;
+  }
+};
+
+export const update_profile_reducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_PROFILE_REQUEST:
+      return { is_loading: true };
+    case UPDATE_PROFILE_SUCCESS:
+      return { is_loading: false, success: true, user_info: action.payload };
+    case UPDATE_PROFILE_FAIL:
+      return { is_loading: false, error: action.payload };
+    case UPDATE_PROFILE_RESET:
+      return {};
     default:
       return state;
   }
