@@ -1,11 +1,12 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Container } from "react-bootstrap";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Header from "./components/Header";
-import Product from "./pages/Product";
-import Profile from "./pages/Profile";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Product from './pages/Product';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           </Switch>
         </Container>
       </main>
+      <Footer />
     </Router>
   );
 };
