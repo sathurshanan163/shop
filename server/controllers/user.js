@@ -55,8 +55,8 @@ const profile = asyncHandler(async (req, res) => {
 const update_profile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
-    user.name = user.name || req.body.name;
-    user.email = user.email || req.body.email;
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.name;
     if (req.body.password) {
       user.password = req.body.password;
     }

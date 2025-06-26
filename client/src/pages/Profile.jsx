@@ -23,7 +23,7 @@ const Profile = ({ history }) => {
     if (!user_info) {
       history.push('/login');
     } else {
-      dispatch(profile(user_info._id));
+      dispatch(profile());
       set_name(user.name);
       set_email(user.email);
     }

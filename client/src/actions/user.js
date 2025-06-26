@@ -76,7 +76,7 @@ export const logout = () => (dispatch) => {
   document.location.href = '/login';
 };
 
-export const profile = (id) => async (dispatch, getState) => {
+export const profile = () => async (dispatch, getState) => {
   try {
     dispatch({ type: PROFILE_REQUEST });
     const {
@@ -87,7 +87,7 @@ export const profile = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${user_info.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`/api/users/profile`, config);
     dispatch({ type: PROFILE_SUCCESS, payload: data });
   } catch (error) {
     const msg = dispatch({ type: PROFILE_RESET });
@@ -110,7 +110,7 @@ export const update_profile = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${user_info.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users/profile`, user, config);
+    const { data } = await axios.put(`/api/users/profile`, user, config);
     dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: LOGIN_SUCCESS, payload: data });
     localStorage.setItem('user_info', JSON.stringify(data));
