@@ -17,7 +17,6 @@ const Home = () => {
 
     return (
         <>
-            <h1>Latest Products</h1>
             {is_loading ? (<Loader />) :
             error? (<Message variant="danger">{error}</Message>) :
             (

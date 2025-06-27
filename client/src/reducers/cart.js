@@ -14,7 +14,9 @@ const cart_reducer = (state = { items: [], shipping_address: {} }, action) => {
       if (item_found) {
         return {
           ...state,
-          items: state.items.map((x) => (x.product === item_found ? item : x)),
+          items: state.items.map((x) =>
+            x.product === item_found.product ? item : x
+          ),
         };
       } else {
         return {

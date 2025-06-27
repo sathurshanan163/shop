@@ -29,7 +29,10 @@ const cart_items_from_storage = localStorage.getItem('items')
 const initialState = {
   user_login: {
     user_info: user_info_from_storage,
-    cart: cart_items_from_storage,
+  },
+  cart: {
+    items: cart_items_from_storage,
+    shipping_address: {},
   },
 };
 
