@@ -14,7 +14,7 @@ import {
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 
-const Product = ({ match }) => {
+const Product = ({ match, history }) => {
   const [qty, set_qty] = useState(1);
 
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const Product = ({ match }) => {
   const { is_loading, error, product } = product_info;
 
   const add_to_cart_handler = () => {
-
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
 
   useEffect(() => {

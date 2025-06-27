@@ -20,6 +20,11 @@ h2 {
   margin: 0.1rem;
 }
 
+a {
+  text-decoration: none !important;
+  color: #000000 !important;
+}
+
 /* carousel */
 .carousel-item-next,
 .carousel-item-prev,
