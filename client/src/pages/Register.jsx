@@ -31,7 +31,7 @@ const Register = ({history}) => {
 
     return (
         <FormContainer>
-            <h1>Register</h1>
+            <h1 className="text-center">Register</h1>
             {error && <Message variant="danger">{error}</Message>}
             {is_loading && <Loader />}
             <Form onSubmit={submit_handler}>
@@ -59,10 +59,10 @@ const Register = ({history}) => {
                     onChange={(event) => set_password(event.target.value)}
                     ></Form.Control>
                 </Form.Group>
-                <Button type="submit" variant="primary">Register</Button>
+                <Button type="submit" variant="primary" className="w-100">Register</Button>
             </Form>
             <Row className="py-3">
-                <Col>
+                <Col className="text-center">
                     Already have an account?{" "}<Link to="/login" >Login</Link>
                 </Col>
             </Row>

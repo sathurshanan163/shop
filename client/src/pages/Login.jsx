@@ -31,7 +31,7 @@ const Login = ({ location, history }) => {
 
   return (
     <FormContainer>
-      <h1>Login</h1>
+      <h1 className="text-center">Login</h1>
       {error && <Message variant="danger">{error}</Message>}
       <Form onSubmit={submit_handler}>
         <Form.Group controlId="email" className="my-2">
@@ -50,13 +50,18 @@ const Login = ({ location, history }) => {
             onChange={(event) => set_password(event.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button disabled={loading} type="submit" variant="primary">
+        <Button
+          disabled={loading}
+          type="submit"
+          variant="primary"
+          className="w-100"
+        >
           Login
         </Button>
         {loading && <Loader />}
       </Form>
       <Row className="py-3">
-        <Col>
+        <Col className="text-center">
           New customer? <Link to="/register">Register</Link>
         </Col>
       </Row>

@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Product from './pages/Product';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
+import Shipping from "./pages/Shipping";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/profile" component={Profile} />
             <Route path="/product/:id" component={Product} />
             <Route path="/cart/:id?" component={Cart} />
+            <Route path="/shipping" component={Shipping} />
           </Switch>
         </Container>
       </main>
