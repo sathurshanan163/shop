@@ -5,7 +5,7 @@ import {
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAIL,
 } from '../constants/order';
-import logout from './user';
+import {logout} from './user';
 
 export const create_order = (order) => async (dispatch, getState) => {
   try {
@@ -23,7 +23,7 @@ export const create_order = (order) => async (dispatch, getState) => {
     dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
     dispatch({ type: CLEAR_CART, payload: data });
     localStorage.removeItem('items');
-  } catch {
+  } catch(error) {
     const msg =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -31,6 +31,6 @@ export const create_order = (order) => async (dispatch, getState) => {
     if (msg === 'Not authorized, token failed') {
       dispatch(logout());
     }
-    dispatch({ type: CREATE_ORDER_FAIL, payload: message });
+    dispatch({ type: CREATE_ORDER_FAIL, payload: msg });
   }
 };

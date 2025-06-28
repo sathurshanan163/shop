@@ -1,9 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { create_order } from '../actions/order';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 
 const Placeorder = ({ history }) => {
+  const dispatch = useDispatch();
+
   const cart = useSelector((state) => state.cart);
 
   if (!cart.shipping_address.address) {
@@ -25,7 +28,20 @@ const Placeorder = ({ history }) => {
     Number(cart.tax_price)
   ).toFixed(2);
 
-  const placeorder = () => {};
+  const { order, success, error } = useSelector((state) => state.order);
+
+  const placeorder = () => {
+    dispatch(
+      create_order({
+        items: cart.items,
+        shipping_address: cart.shipping_address,
+        price: cart.items_price,
+        shipping_price: cart.shipping_price,
+        tax_price: cart.tax_price,
+        total_price: cart.total_price,
+      })
+    );
+  };
 
   return (
     <Row>
@@ -97,9 +113,9 @@ const Placeorder = ({ history }) => {
                 <Col>${cart.total_price}</Col>
               </Row>
             </ListGroup.Item>
-            {/* <ListGroup.Item>
-                {error && <Message variant="danger">{error}</Message>}
-            </ListGroup.Item> */}
+            <ListGroup.Item>
+              {error && <Message variant="danger">{error}</Message>}
+            </ListGroup.Item>
             <ListGroup.Item>
               <Button
                 type="button"
