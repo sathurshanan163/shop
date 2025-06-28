@@ -17,7 +17,7 @@ const Shipping = ({ history }) => {
   const submit_handler = (event) => {
     event.preventDefault();
     dispatch(save_shipping_address({ address, city, post_code, country }));
-    history.push('/pay');
+    history.push('/placeorder');
   };
 
   return (

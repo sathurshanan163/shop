@@ -9,6 +9,7 @@ import Product from './pages/Product';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 import Shipping from "./pages/Shipping";
+import Placeorder from './pages/Placeorder';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/product/:id" component={Product} />
             <Route path="/cart/:id?" component={Cart} />
             <Route path="/shipping" component={Shipping} />
+            <Route path="/placeorder" component={Placeorder} />
           </Switch>
         </Container>
       </main>

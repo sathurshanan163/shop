@@ -3,7 +3,6 @@ import {
   REMOVE_FROM_CART,
   CLEAR_CART,
   SAVE_SHIPPING_ADDRESS,
-  SAVE_PAYMENT_METHOD,
 } from '../constants/cart';
 
 const cart_reducer = (state = { items: [], shipping_address: {} }, action) => {
@@ -33,11 +32,6 @@ const cart_reducer = (state = { items: [], shipping_address: {} }, action) => {
       return {
         ...state,
         shipping_address: action.payload,
-      };
-    case SAVE_PAYMENT_METHOD:
-      return {
-        ...state,
-        payment_method: action.payload,
       };
     case CLEAR_CART:
       return {
