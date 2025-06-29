@@ -8,8 +8,9 @@ import Footer from './components/Footer';
 import Product from './pages/Product';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
-import Shipping from "./pages/Shipping";
+import Shipping from './pages/Shipping';
 import Placeorder from './pages/Placeorder';
+import Order from './pages/Order';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/cart/:id?" component={Cart} />
             <Route path="/shipping" component={Shipping} />
             <Route path="/placeorder" component={Placeorder} />
+            <Route path="/order/:id" component={Order} />
           </Switch>
         </Container>
       </main>

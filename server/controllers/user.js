@@ -21,6 +21,10 @@ const login = asyncHandler(async (req, res) => {
 
 const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    res.status(400);
+    throw new Error('Fields cannot be blank ');
+  }
   const is_user_exist = await User.findOne({ email });
   if (is_user_exist) {
     res.status(400);

@@ -3,6 +3,9 @@ import { create_order } from '../actions/order';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
+// import { useEffect } from 'react';
+// import { PROFILE_RESET } from '../constants/user';
+// import { CREATE_ORDER_RESET } from '../constants/order';
 
 const Placeorder = ({ history }) => {
   const dispatch = useDispatch();
@@ -17,28 +20,28 @@ const Placeorder = ({ history }) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
-  cart.items_price = add_decimals(
+  cart.subtotal = add_decimals(
     cart.items.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
-  cart.shipping_price = add_decimals(cart.items_price > 100 ? 0 : 100);
-  cart.tax_price = add_decimals(Number((0.15 * cart.items_price).toFixed(2)));
-  cart.total_price = (
-    Number(cart.items_price) +
-    Number(cart.shipping_price) +
-    Number(cart.tax_price)
+  cart.shipping = add_decimals(cart.items_price > 100 ? 0 : 100);
+  cart.tax = add_decimals(Number((0.15 * cart.subtotal).toFixed(2)));
+  cart.total = (
+    Number(cart.subtotal) +
+    Number(cart.shipping) +
+    Number(cart.tax)
   ).toFixed(2);
 
-  const { order, success, error } = useSelector((state) => state.order);
+  const {error} = useSelector((state) => state.create_order);
 
   const placeorder = () => {
     dispatch(
       create_order({
         items: cart.items,
         shipping_address: cart.shipping_address,
-        price: cart.items_price,
-        shipping_price: cart.shipping_price,
-        tax_price: cart.tax_price,
-        total_price: cart.total_price,
+        subtotal: cart.subtotal,
+        shipping: cart.shipping,
+        tax: cart.tax,
+        total: cart.total,
       })
     );
   };
@@ -98,19 +101,19 @@ const Placeorder = ({ history }) => {
             <ListGroup.Item>
               <Row>
                 <Col>Items</Col>
-                <Col>${cart.items_price}</Col>
+                <Col>${cart.subtotal}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
                 <Col>Tax</Col>
-                <Col>${cart.tax_price}</Col>
+                <Col>${cart.tax}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
                 <Col>Total</Col>
-                <Col>${cart.total_price}</Col>
+                <Col>${cart.total}</Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>

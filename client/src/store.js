@@ -7,7 +7,7 @@ import {
 } from './reducers/user';
 import { products_reducer, product_reducer } from './reducers/product';
 import cart_reducer from './reducers/cart';
-import { create_order_reducer } from './reducers/order';
+import { create_order_reducer, order_info_reducer } from './reducers/order';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 const reducer = combineReducers({
@@ -17,7 +17,8 @@ const reducer = combineReducers({
   product_list: products_reducer,
   product_info: product_reducer,
   cart: cart_reducer,
-  order: create_order_reducer,
+  create_order: create_order_reducer,
+  order_info: order_info_reducer
 });
 
 const user_info_from_storage = localStorage.getItem('user_info')
