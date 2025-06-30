@@ -2,26 +2,34 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../actions/user';
 import FormContainer from '../components/FormContainer';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import { useLoginMutation } from '../slices/usersApi';
+import { setCredentials } from '../slices/auth';
 
 const Login = ({ location, history }) => {
   const [email, set_email] = useState('');
   const [password, set_password] = useState('');
+  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
 
-  const submit_handler = (event) => {
-    event.preventDefault();
-    dispatch(login(email, password));
-  };
-
-  const user_login = useSelector((state) => state.user_login);
-  const { loading, error, user_info } = user_login;
+  const [login, { isLoading }] = useLoginMutation();
+  const { user_info } = useSelector((state) => state.auth);
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
+
+  const submit_handler = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      history.push(redirect);
+    } catch (err) {
+      setError(err?.data?.message || err.error);
+    }
+  };
 
   useEffect(() => {
     if (user_info) {
@@ -51,14 +59,14 @@ const Login = ({ location, history }) => {
           ></Form.Control>
         </Form.Group>
         <Button
-          disabled={loading}
+          disabled={isLoading}
           type="submit"
           variant="primary"
           className="w-100"
         >
           Login
         </Button>
-        {loading && <Loader />}
+        {isLoading && <Loader />}
       </Form>
       <Row className="py-3">
         <Col className="text-center">

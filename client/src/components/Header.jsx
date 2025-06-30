@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../actions/user';
 
 const Header = () => {
-  const { user_info } = useSelector((state) => state.user_login);
+  const { user_info } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   const logout_handler = () => {
-    dispatch(logout());
+    
   };
 
   return (

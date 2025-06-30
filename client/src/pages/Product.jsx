@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { list_product_info } from '../actions/products';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Row,
@@ -13,29 +12,30 @@ import {
 } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import { useGetProductQuery } from '../slices/productApi';
 
 const Product = ({ match, history }) => {
   const [qty, set_qty] = useState(1);
 
   const dispatch = useDispatch();
 
-  const product_info = useSelector((state) => state.product_info);
-  const { is_loading, error, product } = product_info;
+  const {
+    isLoading,
+    data: product,
+    refetch,
+    error,
+  } = useGetProductQuery(match.params.id);
 
   const add_to_cart_handler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
-  };
 
-  useEffect(() => {
-    dispatch(list_product_info(match.params.id));
-  }, [dispatch, match]);
+  };
 
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>
-      {is_loading ? (
+      {isLoading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>

@@ -37,7 +37,10 @@ const register = asyncHandler(async (req, res) => {
   });
   if (user) {
     res.status(201).json({
-      ...user,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      is_admin: user.is_admin,
       token: generate_token(user._id),
     });
   } else {
