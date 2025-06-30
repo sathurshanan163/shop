@@ -50,7 +50,7 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const profile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).select('-password');
+  const user = await User.findById(req.params.id).select('-password');
   if (user) {
     res.json(user);
   } else {
