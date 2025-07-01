@@ -23,7 +23,6 @@ const Product = ({ match, history }) => {
   const {
     isLoading,
     data: product,
-    refetch,
     error,
   } = useGetProductQuery(match.params.id);
 
@@ -96,8 +95,8 @@ const Product = ({ match, history }) => {
                 )}
                 <ListGroup.Item>
                   <Button
-                    variant="primary"
-                    style={{ width: '100%' }}
+                    variant="dark"
+                    className="w-100"
                     type="button"
                     disabled={product.stock === 0}
                     onClick={add_to_cart_handler}

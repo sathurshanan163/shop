@@ -57,7 +57,7 @@ const Placeorder = ({ history }) => {
             </p>
           </ListGroup.Item>
           <ListGroup.Item>
-            <h2>Order Items</h2>
+            <h2>Items</h2>
             {cart.items.length === 0 ? (
               <Message>Cart is emptyf</Message>
             ) : (
@@ -93,7 +93,7 @@ const Placeorder = ({ history }) => {
         <Card>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2>Order Summary</h2>
+              <h2>Summary</h2>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
@@ -113,15 +113,16 @@ const Placeorder = ({ history }) => {
                 <Col>${cart.total}</Col>
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item>
-              {error && (
+            {error && (
+              <ListGroup.Item>
                 <Message variant="danger">{error.data.message}</Message>
-              )}
-            </ListGroup.Item>
+              </ListGroup.Item>
+            )}
             <ListGroup.Item>
               <Button
                 type="button"
-                className="w-100 text-white bg-primary"
+                variant="dark"
+                className="w-100"
                 disabled={cart.items === 0}
                 onClick={placeorder}
               >

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../slices/auth';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 
 const Header = () => {
   const { user_info } = useSelector((state) => state.auth);
+  const { items } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -25,6 +26,11 @@ const Header = () => {
             <Nav className="ms-auto">
               <Nav.Link as={Link} to="/cart">
                 <FaShoppingCart /> Cart
+                {items.length > 0 && (
+                  <Badge pill bg="success" style={{ marginLeft: '5px' }}>
+                    {items.reduce((acc, item) => acc + item.qty, 0)}
+                  </Badge>
+                )}
               </Nav.Link>
               {user_info ? (
                 <>

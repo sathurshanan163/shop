@@ -26,7 +26,7 @@ const Cart = ({ history }) => {
     dispatch(remove_from_cart(id));
   };
 
-  const chekout_handler = (id) => {
+  const chekout_handler = () => {
     history.push('/login?redirect=/shipping');
   };
 
@@ -96,14 +96,10 @@ const Cart = ({ history }) => {
             <ListGroup.Item>
               <Button
                 type="button"
-                className="primary btn-block"
+                className="w-100"
+                variant="dark"
                 disabled={items.length === 0}
                 onClick={chekout_handler}
-                style={{
-                  width: '100%',
-                  backgroundColor: '#0D6EFD',
-                  color: '#FFFFFF',
-                }}
               >
                 Checkout
               </Button>
