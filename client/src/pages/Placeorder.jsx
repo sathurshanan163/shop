@@ -1,50 +1,47 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { create_order } from '../actions/order';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
-// import { useEffect } from 'react';
-// import { PROFILE_RESET } from '../constants/user';
-// import { CREATE_ORDER_RESET } from '../constants/order';
+import { useCreateOrderMutation } from '../slices/orderApi';
+import { clear_items } from '../slices/cart';
+import Loader from '../components/Loader';
 
 const Placeorder = ({ history }) => {
   const dispatch = useDispatch();
 
+  const { user_info } = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
 
-  if (!cart.shipping_address.address) {
-    history.push('/shipping');
-  }
+  const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
-  const add_decimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
+  const placeorder = async () => {
+    try {
+      const res = await createOrder({
+        token: user_info.token,
+        order: {
+          items: cart.items,
+          shipping_address: cart.shipping_address,
+          subtotal: cart.subtotal,
+          shipping: cart.shipping,
+          tax: cart.tax,
+          total: cart.total,
+        },
+      }).unwrap();
+      dispatch(clear_items());
+      console.log(res._id);
+
+      history.push(`/order/${res._id}`);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  cart.subtotal = add_decimals(
-    cart.items.reduce((acc, item) => acc + item.price * item.qty, 0)
-  );
-  cart.shipping = add_decimals(cart.items_price > 100 ? 0 : 100);
-  cart.tax = add_decimals(Number((0.15 * cart.subtotal).toFixed(2)));
-  cart.total = (
-    Number(cart.subtotal) +
-    Number(cart.shipping) +
-    Number(cart.tax)
-  ).toFixed(2);
-
-  const {error} = useSelector((state) => state.create_order);
-
-  const placeorder = () => {
-    dispatch(
-      create_order({
-        items: cart.items,
-        shipping_address: cart.shipping_address,
-        subtotal: cart.subtotal,
-        shipping: cart.shipping,
-        tax: cart.tax,
-        total: cart.total,
-      })
-    );
-  };
+  useEffect(() => {
+    if (!cart.shipping_address.address) {
+      history.push('/shipping');
+    }
+  }, [cart.shipping_address.address, history]);
 
   return (
     <Row>
@@ -117,7 +114,9 @@ const Placeorder = ({ history }) => {
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
-              {error && <Message variant="danger">{error}</Message>}
+              {error && (
+                <Message variant="danger">{error.data.message}</Message>
+              )}
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
@@ -128,6 +127,7 @@ const Placeorder = ({ history }) => {
               >
                 Placeorder
               </Button>
+              {isLoading && <Loader />}
             </ListGroup.Item>
           </ListGroup>
         </Card>

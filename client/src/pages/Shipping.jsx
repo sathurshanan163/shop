@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Form, Button, FormGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
-import { save_shipping_address } from '../actions/cart';
+import { save_shipping_address } from '../slices/cart';
 
 const Shipping = ({ history }) => {
   const { shipping_address } = useSelector((state) => state.cart);
 
-  const [address, set_address] = useState(shipping_address.address);
-  const [city, set_city] = useState(shipping_address.city);
-  const [post_code, set_post_code] = useState(shipping_address.post_code);
-  const [country, set_country] = useState(shipping_address.country);
+  const [address, set_address] = useState(shipping_address.address || '');
+  const [city, set_city] = useState(shipping_address.city || '');
+  const [post_code, set_post_code] = useState(shipping_address.post_code || '');
+  const [country, set_country] = useState(shipping_address.country || '');
 
   const dispatch = useDispatch();
 
@@ -60,7 +60,7 @@ const Shipping = ({ history }) => {
             onChange={(event) => set_country(event.target.value)}
           ></Form.Control>
         </FormGroup>
-        <Button className="w-100" type="submit" variant="primary">
+        <Button className="w-100" type="submit" variant="dark">
           Continue
         </Button>
       </Form>

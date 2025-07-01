@@ -78,7 +78,7 @@ const Profile = ({ history }) => {
           </Form.Group>
           <Button
             type="submit"
-            variant="primary"
+            variant="dark"
             disabled={loading_update_profile}
           >
             Update

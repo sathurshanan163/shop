@@ -68,7 +68,7 @@ const Register = ({ location, history }) => {
             onChange={(event) => set_password(event.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type="submit" variant="primary" className="w-100">
+        <Button type="submit" variant="dark" className="w-100">
           Register
         </Button>
       </Form>

@@ -1,18 +1,23 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { order_info } from '../actions/order';
-import {Link} from "react-router-dom"
+import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { Row, Col, ListGroup, Image } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
+import { useGetOrderQuery } from '../slices/orderApi';
 
 const Order = ({ match, history }) => {
   const id = match.params.id;
 
   const dispatch = useDispatch();
 
-  const { user_info } = useSelector((state) => state.user_login);
-  const { is_loading, error, order } = useSelector((state) => state.order_info);
+  const { user_info } = useSelector((state) => state.auth);
+  const {
+    data: order,
+    isLoading,
+    error,
+  } = useGetOrderQuery({ token: user_info.token, id });
 
   useEffect(() => {
     if (!user_info) {
@@ -21,7 +26,7 @@ const Order = ({ match, history }) => {
     dispatch(order_info(id));
   }, [dispatch, id, user_info, history]);
 
-  return is_loading ? (
+  return isLoading ? (
     <Loader />
   ) : error ? (
     <Message variant="alert alert-danger">{error}</Message>
@@ -62,8 +67,8 @@ const Order = ({ match, history }) => {
               )}
             </ListGroup.Item>
             <ListGroup.Item>
-              <h2>Order Items</h2>
-              <ListGroup variant='flush'>
+              <h2>Items</h2>
+              <ListGroup variant="flush">
                 {order.items.map((item, index) => (
                   <ListGroup.Item key={index}>
                     <Row>
@@ -82,6 +87,46 @@ const Order = ({ match, history }) => {
               </ListGroup>
             </ListGroup.Item>
           </ListGroup>
+        </Col>
+        <Col md={4}>
+          <Card>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <h2>Summary</h2>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Subtotal</Col>
+                  <Col>${order.subtotal}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Shipping</Col>
+                  <Col>${order.shipping}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Tax</Col>
+                  <Col>${order.tax}</Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Total</Col>
+                  <Col>${order.total}</Col>
+                </Row>
+              </ListGroup.Item>
+              {!order.is_paid && (
+                <ListGroup.Item>
+                  <Button type="button" className="w-100" variant="dark">
+                    Pay
+                  </Button>
+                </ListGroup.Item>
+              )}
+            </ListGroup>
+          </Card>
         </Col>
       </Row>
     </>

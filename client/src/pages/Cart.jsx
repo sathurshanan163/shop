@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { add_to_cart, remove_from_cart } from '../actions/cart';
 import { Link } from 'react-router-dom';
 import {
   Row,
@@ -13,28 +11,24 @@ import {
 } from 'react-bootstrap';
 import Message from '../components/Message';
 import { FaTrash } from 'react-icons/fa';
+import { add_to_cart, remove_from_cart } from '../slices/cart';
 
-const Cart = ({ match, location, history }) => {
-  const product_id = match.params.id;
-
-  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
-
+const Cart = ({ history }) => {
   const dispatch = useDispatch();
+
   const { items } = useSelector((state) => state.cart);
+
+  const add_to_cart_handler = (product, qty) => {
+    dispatch(add_to_cart({ ...product, qty }));
+  };
 
   const remove_from_cart_handler = (id) => {
     dispatch(remove_from_cart(id));
   };
 
-  const chekout_handler = () => {
+  const chekout_handler = (id) => {
     history.push('/login?redirect=/shipping');
   };
-
-  useEffect(() => {
-    if (product_id) {
-      dispatch(add_to_cart(product_id, qty));
-    }
-  }, [dispatch, product_id, qty]);
 
   return (
     <Row>
@@ -47,7 +41,7 @@ const Cart = ({ match, location, history }) => {
         ) : (
           <ListGroup variant="flush">
             {items.map((item) => (
-              <ListGroup.Item key={item.product}>
+              <ListGroup.Item key={item._id}>
                 <Row>
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
@@ -61,9 +55,7 @@ const Cart = ({ match, location, history }) => {
                       as="select"
                       value={item.qty}
                       onChange={(event) =>
-                        dispatch(
-                          add_to_cart(item.product, Number(event.target.value))
-                        )
+                        add_to_cart_handler(item, Number(event.target.value))
                       }
                     >
                       {[...Array(item.stock).keys()].map((x) => (
@@ -77,7 +69,7 @@ const Cart = ({ match, location, history }) => {
                     <Button
                       type="button"
                       variant="light"
-                      onClick={() => remove_from_cart_handler(item.product)}
+                      onClick={() => remove_from_cart_handler(item._id)}
                     >
                       <FaTrash />
                     </Button>

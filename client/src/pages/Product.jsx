@@ -13,6 +13,7 @@ import {
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { useGetProductQuery } from '../slices/productApi';
+import { add_to_cart } from '../slices/cart';
 
 const Product = ({ match, history }) => {
   const [qty, set_qty] = useState(1);
@@ -27,7 +28,8 @@ const Product = ({ match, history }) => {
   } = useGetProductQuery(match.params.id);
 
   const add_to_cart_handler = () => {
-
+    dispatch(add_to_cart({ ...product, qty }));
+    history.push('/cart');
   };
 
   return (

@@ -61,7 +61,7 @@ const Login = ({ location, history }) => {
         <Button
           disabled={isLoading}
           type="submit"
-          variant="primary"
+          variant="dark"
           className="w-100"
         >
           Login
