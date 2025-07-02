@@ -2,9 +2,12 @@ import asyncHandler from 'express-async-handler';
 import Order from '../models/order.js';
 import Product from '../models/product.js';
 import { calculate_prices } from '../utils/calculate_prices.js';
+import Stripe from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const create_order = asyncHandler(async (req, res) => {
-  const { items, shipping_address, subtotal, tax, shipping, total } = req.body;
+  const { items, shipping_address } = req.body;
 
   if (items && items.length === 0) {
     res.status(400);
@@ -53,4 +56,40 @@ const order_by_id = asyncHandler(async (req, res) => {
   }
 });
 
-export { create_order, order_by_id };
+const my_orders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  res.json(orders);
+});
+
+const order_to_paid = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.body.order_id);
+  if (order) {
+    const line_items = order.items.map((item) => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: item.name,
+        },
+        unit_amount: item.price * 100,
+      },
+      quantity: item.qty,
+    }));
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: 'http://localhost:3000/',
+        cancel_url: 'http://localhost:3000/profile',
+      });
+      res.send({ url: session.url });
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+export { create_order, order_by_id, my_orders, order_to_paid };

@@ -1,6 +1,6 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../constants';
-// import { logout } from './auth';
+import { logout } from './auth';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -8,9 +8,9 @@ const baseQuery = fetchBaseQuery({
 
 async function baseQueryWithAuth(args, api, extra) {
   const result = await baseQuery(args, api, extra);
-  // if (result.error && result.error.status === 401) {
-  //   api.dispatch(logout());
-  // }
+  if (result.error && result.error.status === 401) {
+    api.dispatch(logout());
+  }
   return result;
 }
 

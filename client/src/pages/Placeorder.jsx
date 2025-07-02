@@ -52,8 +52,7 @@ const Placeorder = ({ history }) => {
             <p>
               <strong>Address: </strong>
               {cart.shipping_address.address}, {cart.shipping_address.city}{' '}
-              {cart.shipping_address.post_code},{''}
-              {cart.shipping_address.country}
+              {cart.shipping_address.post_code}, {cart.shipping_address.country}
             </p>
           </ListGroup.Item>
           <ListGroup.Item>

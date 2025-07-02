@@ -6,6 +6,8 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useGetOrderQuery } from '../slices/orderApi';
+import { loadStripe } from '@stripe/stripe-js';
+import { ORDERS_URL } from '../constants';
 
 const Order = ({ match, history }) => {
   const id = match.params.id;
@@ -18,6 +20,25 @@ const Order = ({ match, history }) => {
     isLoading,
     error,
   } = useGetOrderQuery({ token: user_info.token, id });
+
+  const stripe = loadStripe();
+
+  const handle_submit = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${user_info.token}`,
+    };
+    const res = await fetch(`/api/stripe/create-checkout-session`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ order_id: id }),
+    });
+    const data = await res.json();
+    if (data.url) {
+      console.log(data.url);
+      window.location.href = data.url;
+    }
+  };
 
   useEffect(() => {
     if (!user_info) {
@@ -120,7 +141,12 @@ const Order = ({ match, history }) => {
               </ListGroup.Item>
               {!order.is_paid && (
                 <ListGroup.Item>
-                  <Button type="button" className="w-100" variant="dark">
+                  <Button
+                    type="button"
+                    className="w-100"
+                    variant="dark"
+                    onClick={handle_submit}
+                  >
                     Pay
                   </Button>
                 </ListGroup.Item>
