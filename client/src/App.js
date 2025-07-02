@@ -11,8 +11,6 @@ import Cart from './pages/Cart';
 import Shipping from './pages/Shipping';
 import Placeorder from './pages/Placeorder';
 import Order from './pages/Order';
-import Success from './pages/Success';
-import Cancel from './pages/Cancel';
 
 const App = () => {
   return (
@@ -30,8 +28,6 @@ const App = () => {
             <Route path="/shipping" component={Shipping} />
             <Route path="/placeorder" component={Placeorder} />
             <Route path="/order/:id" component={Order} />
-            <Route path="/success" component={Success} />
-            <Route path="/cancel" component={Cancel} />
           </Switch>
         </Container>
       </main>

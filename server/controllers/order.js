@@ -28,14 +28,11 @@ const create_order = asyncHandler(async (req, res) => {
         _id: undefined,
       };
     });
-    const { subtotal, shipping, tax, total } = calculate_prices(db_order_items);
+    const total = calculate_prices(db_order_items);
     const new_order = new Order({
       items: db_order_items,
       user: req.user._id,
       shipping_address,
-      subtotal,
-      tax,
-      shipping,
       total,
     });
     const created_order = await new_order.save();
@@ -76,12 +73,13 @@ const order_to_paid = asyncHandler(async (req, res) => {
     }));
     try {
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
         line_items,
         mode: 'payment',
         success_url: 'http://localhost:3000/',
         cancel_url: 'http://localhost:3000/profile',
       });
+      order.is_paid = true;
+      await order.save();
       res.send({ url: session.url });
     } catch (error) {
       console.log(error);

@@ -32,21 +32,6 @@ const order_schema = new mongoose.Schema(
       update_time: { type: String },
       email_address: { type: String },
     },
-    subtotal: {
-      type: Number,
-      default: 0.0,
-      required: true,
-    },
-    tax: {
-      type: Number,
-      default: 0.0,
-      required: true,
-    },
-    shipping: {
-      type: Number,
-      default: 0.0,
-      required: true,
-    },
     total: {
       type: Number,
       default: 0.0,
@@ -56,9 +41,6 @@ const order_schema = new mongoose.Schema(
       type: Boolean,
       default: false,
       required: true,
-    },
-    paid_at: {
-      type: Date,
     },
     is_delivered: {
       type: Boolean,

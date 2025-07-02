@@ -85,7 +85,7 @@ const Cart = ({ history }) => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>
-                Subtotal ({items.reduce((acc, item) => acc + item.qty, 0)})
+                Total ({items.reduce((acc, item) => acc + item.qty, 0)})
                 items
               </h2>
               $

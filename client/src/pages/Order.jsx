@@ -6,8 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useGetOrderQuery } from '../slices/orderApi';
-import { loadStripe } from '@stripe/stripe-js';
-import { ORDERS_URL } from '../constants';
+import { STRIPE_URL } from '../constants';
 
 const Order = ({ match, history }) => {
   const id = match.params.id;
@@ -15,27 +14,25 @@ const Order = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const { user_info } = useSelector((state) => state.auth);
+
   const {
     data: order,
     isLoading,
     error,
   } = useGetOrderQuery({ token: user_info.token, id });
 
-  const stripe = loadStripe();
-
   const handle_submit = async () => {
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${user_info.token}`,
     };
-    const res = await fetch(`/api/stripe/create-checkout-session`, {
+    const res = await fetch(`${STRIPE_URL}/create-checkout-session`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ order_id: id }),
     });
     const data = await res.json();
     if (data.url) {
-      console.log(data.url);
       window.location.href = data.url;
     }
   };
@@ -73,16 +70,14 @@ const Order = ({ match, history }) => {
                 {order.shipping_address.country}
               </p>
               {order.is_delivered ? (
-                <Message variant="success">
-                  Delivered on {order.delivered_at}
-                </Message>
+                <Message variant="success">Delivered</Message>
               ) : (
                 <Message variant="danger">Not Delivered</Message>
               )}
             </ListGroup.Item>
             <ListGroup.Item>
               {order.is_paid ? (
-                <Message variant="success">Paid on {order.paid_at}</Message>
+                <Message variant="success">Paid</Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
               )}
@@ -114,24 +109,6 @@ const Order = ({ match, history }) => {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>Summary</h2>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Subtotal</Col>
-                  <Col>${order.subtotal}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>${order.shipping}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>${order.tax}</Col>
-                </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>

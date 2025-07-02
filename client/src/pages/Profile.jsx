@@ -6,7 +6,7 @@ import Message from '../components/Message';
 import { useProfileMutation } from '../slices/usersApi';
 import { useGetMyOrdersQuery } from '../slices/orderApi';
 import { setCredentials } from '../slices/auth';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Profile = ({ history }) => {
@@ -121,7 +121,7 @@ const Profile = ({ history }) => {
                   <td>${order.total}</td>
                   <td>
                     {order.is_paid ? (
-                      order.paid_at.substring(0, 10)
+                      <FaCheck style={{ color: 'green' }} />
                     ) : (
                       <FaTimes style={{ color: 'red' }} />
                     )}

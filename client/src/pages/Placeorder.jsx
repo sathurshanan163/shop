@@ -22,15 +22,10 @@ const Placeorder = ({ history }) => {
         order: {
           items: cart.items,
           shipping_address: cart.shipping_address,
-          subtotal: cart.subtotal,
-          shipping: cart.shipping,
-          tax: cart.tax,
           total: cart.total,
         },
       }).unwrap();
       dispatch(clear_items());
-      console.log(res._id);
-
       history.push(`/order/${res._id}`);
     } catch (err) {
       console.error(err);
@@ -93,18 +88,6 @@ const Placeorder = ({ history }) => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Summary</h2>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col>Items</Col>
-                <Col>${cart.subtotal}</Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col>Tax</Col>
-                <Col>${cart.tax}</Col>
-              </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
