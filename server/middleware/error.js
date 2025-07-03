@@ -1,4 +1,10 @@
-export const error_handler = (err, req, res, next) => {
+const not_found = (req, res, next) => {
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  res.status(404);
+  next(error);
+};
+
+const error_handler = (err, req, res, next) => {
   const status_code = res.statuCode === 200 ? 500 : res.statusCode;
   res.status(status_code);
   res.json({
@@ -6,3 +12,5 @@ export const error_handler = (err, req, res, next) => {
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 };
+
+export { not_found, error_handler };
