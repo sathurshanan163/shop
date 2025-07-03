@@ -85,10 +85,17 @@ const Order = ({ match, history }) => {
                   <ListGroup.Item key={index}>
                     <Row>
                       <Col md={1}>
-                        <Image src={item.image} alt={item.name} fluid rounded />
+                        <Link to={`/product/${item.product}`}>
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fluid
+                            rounded
+                          />
+                        </Link>
                       </Col>
                       <Col>
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                        <p>{item.name}</p>
                       </Col>
                       <Col md={4}>
                         {item.qty} x ${item.price} = ${item.qty * item.price}
