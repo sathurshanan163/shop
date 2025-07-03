@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { useProfileMutation } from '../slices/usersApi';
-import { useGetMyOrdersQuery } from '../slices/orderApi';
-import { setCredentials } from '../slices/auth';
+import { useProfileMutation } from '../slices/users_api';
+import { useGetMyOrdersQuery } from '../slices/order_api';
+import { set_credentials } from '../slices/auth';
 import { FaTimes, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -40,7 +40,7 @@ const Profile = ({ history }) => {
           password,
         },
       }).unwrap();
-      dispatch(setCredentials({ ...res }));
+      dispatch(set_credentials({ ...res }));
     } catch (err) {
       set_error(err?.data?.message || err.error);
     }
@@ -128,7 +128,7 @@ const Profile = ({ history }) => {
                   </td>
                   <td>
                     {order.is_delivered ? (
-                      order.delivered_at.substring(0, 10)
+                      <FaCheck style={{ color: 'green' }} />
                     ) : (
                       <FaTimes style={{ color: 'red' }} />
                     )}

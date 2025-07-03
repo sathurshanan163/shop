@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import Order from '../models/order.js';
 import Product from '../models/product.js';
-import { calculate_prices } from '../utils/calculate_prices.js';
+import { calculate_total } from '../utils/calculate_total.js';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET);
@@ -28,7 +28,7 @@ const create_order = asyncHandler(async (req, res) => {
         _id: undefined,
       };
     });
-    const total = calculate_prices(db_order_items);
+    const total = calculate_total(db_order_items);
     const new_order = new Order({
       items: db_order_items,
       user: req.user._id,
@@ -82,7 +82,8 @@ const order_to_paid = asyncHandler(async (req, res) => {
       await order.save();
       res.send({ url: session.url });
     } catch (error) {
-      console.log(error);
+      res.status(500);
+      throw new Error('Payment failed');
     }
   } else {
     res.status(404);

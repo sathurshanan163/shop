@@ -12,7 +12,7 @@ import {
 } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useGetProductQuery } from '../slices/productApi';
+import { useGetProductQuery } from '../slices/product_api';
 import { add_to_cart } from '../slices/cart';
 
 const Product = ({ match, history }) => {

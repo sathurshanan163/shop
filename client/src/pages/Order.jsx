@@ -1,17 +1,14 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { order_info } from '../actions/order';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
-import { useGetOrderQuery } from '../slices/orderApi';
+import { useGetOrderQuery } from '../slices/order_api';
 import { STRIPE_URL } from '../constants';
 
 const Order = ({ match, history }) => {
   const id = match.params.id;
-
-  const dispatch = useDispatch();
 
   const { user_info } = useSelector((state) => state.auth);
 
@@ -26,7 +23,7 @@ const Order = ({ match, history }) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${user_info.token}`,
     };
-    const res = await fetch(`${STRIPE_URL}/create-checkout-session`, {
+    const res = await fetch(STRIPE_URL, {
       method: 'POST',
       headers,
       body: JSON.stringify({ order_id: id }),
@@ -41,8 +38,7 @@ const Order = ({ match, history }) => {
     if (!user_info) {
       history.push('/login');
     }
-    dispatch(order_info(id));
-  }, [dispatch, id, user_info, history]);
+  }, [user_info, history]);
 
   return isLoading ? (
     <Loader />

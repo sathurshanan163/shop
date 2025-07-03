@@ -5,8 +5,8 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { useRegisterMutation } from '../slices/usersApi';
-import { setCredentials } from '../slices/auth';
+import { useRegisterMutation } from '../slices/users_api';
+import { set_credentials } from '../slices/auth';
 
 const Register = ({ location, history }) => {
   const [name, set_name] = useState('');
@@ -25,7 +25,7 @@ const Register = ({ location, history }) => {
     event.preventDefault();
     try {
       const res = await register({ name, email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
+      dispatch(set_credentials({ ...res }));
       history.push(redirect);
     } catch (err) {
       setError(err?.data?.message || err.error);

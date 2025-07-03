@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useLoginMutation } from '../slices/usersApi';
-import { setCredentials } from '../slices/auth';
+import { useLoginMutation } from '../slices/users_api';
+import { set_credentials } from '../slices/auth';
 
 const Login = ({ location, history }) => {
   const [email, set_email] = useState('');
@@ -24,7 +24,7 @@ const Login = ({ location, history }) => {
     event.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
+      dispatch(set_credentials({ ...res }));
       history.push(redirect);
     } catch (err) {
       setError(err?.data?.message || err.error);

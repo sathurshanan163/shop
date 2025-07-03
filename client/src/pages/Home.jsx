@@ -2,7 +2,7 @@ import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useGetProductsQuery } from '../slices/productApi';
+import { useGetProductsQuery } from '../slices/product_api';
 
 const Home = () => {
   const { isLoading, error, data: products } = useGetProductsQuery();

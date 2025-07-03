@@ -25,8 +25,8 @@ const register = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Fields cannot be blank ');
   }
-  const is_user_exist = await User.findOne({ email });
-  if (is_user_exist) {
+  const user_found = await User.findOne({ email });
+  if (user_found) {
     res.status(400);
     throw new Error('User already exists');
   }

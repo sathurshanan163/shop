@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
-import { useCreateOrderMutation } from '../slices/orderApi';
+import { useCreateOrderMutation } from '../slices/order_api';
 import { clear_items } from '../slices/cart';
 import Loader from '../components/Loader';
 
