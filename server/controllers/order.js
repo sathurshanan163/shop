@@ -73,6 +73,7 @@ const order_to_paid = asyncHandler(async (req, res) => {
     }));
     try {
       const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
         line_items,
         mode: 'payment',
         success_url: 'http://localhost:3000/',
