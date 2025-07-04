@@ -5,7 +5,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useGetOrderQuery } from '../slices/order_api';
-import { STRIPE_URL } from '../constants';
+import { usePayMutation } from '../slices/order_api';
 
 const Order = ({ match, history }) => {
   const id = match.params.id;
@@ -18,19 +18,16 @@ const Order = ({ match, history }) => {
     error,
   } = useGetOrderQuery({ token: user_info.token, id });
 
+  const [pay, { isLoading: isPayLoading }] = usePayMutation();
+
   const handle_submit = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${user_info.token}`,
-    };
-    const res = await fetch(STRIPE_URL, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ order_id: id }),
-    });
-    const data = await res.json();
-    if (data.url) {
-      window.location.href = data.url;
+    const res = await pay({
+      token: user_info.token,
+      id: order._id,
+    }).unwrap();
+
+    if (res.url) {
+      window.location.href = res.url;
     }
   };
 
@@ -126,6 +123,7 @@ const Order = ({ match, history }) => {
                     className="w-100"
                     variant="dark"
                     onClick={handle_submit}
+                    disabled={isPayLoading}
                   >
                     Pay
                   </Button>

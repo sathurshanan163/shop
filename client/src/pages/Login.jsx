@@ -4,7 +4,6 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import { useLoginMutation } from '../slices/users_api';
 import { set_credentials } from '../slices/auth';
 
@@ -66,7 +65,6 @@ const Login = ({ location, history }) => {
         >
           Login
         </Button>
-        {isLoading && <Loader />}
       </Form>
       <Row className="py-3">
         <Col className="text-center">

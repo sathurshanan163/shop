@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import { useCreateOrderMutation } from '../slices/order_api';
 import { clear_items } from '../slices/cart';
-import Loader from '../components/Loader';
 
 const Placeorder = ({ history }) => {
   const dispatch = useDispatch();
@@ -53,7 +52,7 @@ const Placeorder = ({ history }) => {
           <ListGroup.Item>
             <h2>Items</h2>
             {cart.items.length === 0 ? (
-              <Message>Cart is emptyf</Message>
+              <Message>Cart is empty</Message>
             ) : (
               <ListGroup variant="flush">
                 {cart.items.map((item, index) => (
@@ -105,12 +104,11 @@ const Placeorder = ({ history }) => {
                 type="button"
                 variant="dark"
                 className="w-100"
-                disabled={cart.items === 0}
+                disabled={cart.items.length === 0 || isLoading}
                 onClick={placeorder}
               >
                 Placeorder
               </Button>
-              {isLoading && <Loader />}
             </ListGroup.Item>
           </ListGroup>
         </Card>

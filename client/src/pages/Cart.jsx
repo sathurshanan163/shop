@@ -44,10 +44,12 @@ const Cart = ({ history }) => {
               <ListGroup.Item key={item._id}>
                 <Row>
                   <Col md={2}>
-                    <Image src={item.image} alt={item.name} fluid rounded />
+                    <Link to={`/product/${item._id}`}>
+                      <Image src={item.image} alt={item.name} fluid rounded />
+                    </Link>
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <p>{item.name}</p>
                   </Col>
                   <Col md={2}>${item.price}</Col>
                   <Col md={2}>
@@ -85,8 +87,7 @@ const Cart = ({ history }) => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>
-                Total ({items.reduce((acc, item) => acc + item.qty, 0)})
-                items
+                Total ({items.reduce((acc, item) => acc + item.qty, 0)}) items
               </h2>
               $
               {items

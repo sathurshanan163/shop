@@ -92,7 +92,6 @@ const Profile = ({ history }) => {
           >
             Update
           </Button>
-          {loading_update_profile && <Loader />}
         </Form>
       </Col>
       <Col md={9}>
