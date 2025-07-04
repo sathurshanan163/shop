@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
-import { useGetOrderQuery } from '../slices/order_api';
-import { usePayMutation } from '../slices/order_api';
+import { useGetOrderQuery, usePayMutation } from '../slices/order_api';
 
 const Order = ({ match, history }) => {
   const id = match.params.id;
