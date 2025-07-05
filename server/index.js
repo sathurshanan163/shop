@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
-import user_routes from './routers/user.js';
-import product_routes from './routers/product.js';
-import order_routes from './routers/order.js';
+import user_routes from './routes/user.js';
+import product_routes from './routes/product.js';
+import order_routes from './routes/order.js';
 import connect_db from './config/db.js';
 import { not_found, error_handler } from './middleware/error.js';
-import stripe_route from './routers/stripe.js';
+import stripe_route from './routes/stripe.js';
 
 connect_db();
 

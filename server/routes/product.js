@@ -4,7 +4,7 @@ import object_id from '../middleware/object_id.js';
 
 const router = express.Router();
 
-router.route('/').get(products);
-router.route('/:id').get(object_id, product);
+router.get('/', products);
+router.get('/:id', object_id, product);
 
 export default router;
